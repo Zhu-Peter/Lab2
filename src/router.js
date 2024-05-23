@@ -1,7 +1,9 @@
 import Vue from "vue";
 import Router from 'vue-router';
-import LogIn from './src/views/LoginView';
-import Menu from './src/views/MenuView.vue';
+import Home from './views/HomeView';
+import LogIn from './views/LoginView';
+import Menu from './views/MenuView.vue';
+import Order from './views/OrderView.vue'
 
 Vue.use(Router)
 
@@ -10,6 +12,11 @@ const router = new Router({
     routes: [
         {
             path: '/',
+            name: 'Home',
+            component: Home
+        },
+        {
+            path: '/login',
             name: 'Log In',
             component: LogIn
         },
@@ -17,7 +24,12 @@ const router = new Router({
             path: '/menu',
             name: 'Menu',
             component: Menu
-        }
+        },
+        {
+            path: '/order',
+            name: 'Orders',
+            component: Order
+        },
     ]
 })
 
