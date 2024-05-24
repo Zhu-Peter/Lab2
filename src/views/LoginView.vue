@@ -1,6 +1,10 @@
 <template>
     <div>
         <router-link to="/"> back to home </router-link>
+        <div id="tabs_container">
+            <div>Sign In</div>
+            <router-link to="/signup">Sign Up</router-link>
+        </div>
         <div id="login_container">
             <div>
                 <label for="">Email: </label>
@@ -61,11 +65,44 @@ export default {
 </script>
 
 <style scoped>
+*{
+    box-sizing: border-box;
+}
+#tabs_container {
+    width: 800px;
+    margin-top: 200px;
+    margin-inline: auto;
+
+    display: flex;
+    justify-items: start;
+
+}
+
+#tabs_container > a {
+    border-top: solid 3px orange;
+    border-right: solid 3px orange;
+    background-color: gray;
+    text-decoration: none;
+    color: black;
+    padding: 10px;
+}
+
+#tabs_container > div {
+    border-top: solid 3px orange;
+    border-left: solid 3px orange;
+    background-color: white;
+    text-decoration: none;
+    color: black;
+    padding: 10px;
+    padding-top: 13px;
+
+    margin-bottom: -3px;
+    
+}
 #login_container {
     border: solid 3px orange;
     background-color: white;
-    width: 500px;
-    margin-top: 200px;
+    width: 800px;
     margin-inline: auto;
     padding: 50px 120px 50px 20px;
 

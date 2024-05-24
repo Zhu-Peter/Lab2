@@ -5,14 +5,19 @@
                 <router-link :to="page.path">{{ page.name }}</router-link>
             </div>
             <div class="nav_button" style="margin-left: auto;">
-                <router-link to="/login">
-                    <div v-if="!isLoggedIn" id="login_button">
-                        Log In
-                    </div>
-                    <div id="welcome" v-if="isLoggedIn"><span><img :src="userData.image_url" width="30px"
-                                style="border-radius: 50%; margin: 5px" alt=""></span> {{ userData.username }} ({{
-                                    userData.first_name }} {{ userData.last_name }})</div>
-                </router-link>
+                <div v-if="!isLoggedIn" id="login_button">
+                    <router-link to="/login">Log In</router-link>
+                </div>
+                <div v-if="isLoggedIn">
+                    <router-link to="/profile">
+                        <div id="welcome">
+                            <span>
+                                <img :src="userData.image_url" width="30px" style="border-radius: 50%; margin: 5px" />
+                            </span>
+                            {{ userData.username }} ({{ userData.first_name }} {{ userData.last_name }})
+                        </div>
+                    </router-link>
+                </div>
             </div>
         </nav>
     </div>
@@ -47,7 +52,7 @@ export default {
     },
     beforeMount() {
         let data = Cookies.get('LoginData');
-        // console.log(token)
+        // console.log(data)
 
         //fix null to check
         if (!(data === null)) {
@@ -61,7 +66,12 @@ export default {
                         "x-api-key": "q1LXwh"
                     },
                     params: data
-                }).then((response) => { console.log(response.data[0]); this.userData = {...this.userData, ...response.data[0]}; Cookies.set('LoginData', JSON.stringify(this.userData)) });
+                }).then((response) => {
+                    // console.log({ ...data, ...response.data[0] });
+                    this.userData = { ...data, ...response.data[0] };
+                    let tempData = JSON.stringify(this.userData);
+                    Cookies.set('LoginData', tempData)
+                });
 
             }
 
@@ -88,10 +98,10 @@ nav {
     background-color: lightgray;
     cursor: pointer;
 }
-
+/* 
 #login_button:hover {
     background-color: orange;
-}
+} */
 
 #welcome {
     display: flex;
