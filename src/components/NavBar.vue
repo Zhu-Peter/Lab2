@@ -1,8 +1,8 @@
 <template>
     <div id="nav_bar">
         <nav>
-            <div class="nav_button" v-for="(page, index) in links" :key="`page-${index}`">
-                <router-link :to="page.path">{{ page.name }}</router-link>
+            <div v-for="(page, index) in links" :key="`page-${index}`">
+                <router-link  class="nav_button" :to="page.path">{{ page.name }}</router-link>
             </div>
             <div class="nav_button" style="margin-left: auto;">
                 <div v-if="!isLoggedIn" id="login_button">
@@ -42,6 +42,10 @@ export default {
                 {
                     name: 'Order',
                     path: '/order'
+                },
+                {
+                    name: 'Discover',
+                    path: '/restaurants'
                 },
             ],
             isLoggedIn: false,

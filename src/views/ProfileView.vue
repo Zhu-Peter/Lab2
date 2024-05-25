@@ -5,11 +5,18 @@
             <div class="info_container">
                 <img :src="userData.image_url" alt="" style="border-radius: 50%;">
                 <div id="form_container">
-                    <div>{{ userData.first_name }} {{ userData.last_name }} (<a>change</a>)</div>
+                    <div>{{ userData.first_name }} {{ userData.last_name }} (<a @click="changeName">change</a>)<br>
+                        <span v-if="toggleChangeName" id="form_name">
+                            <input v-model="form.first_name" type="text" placeholder="First Name">
+                            <input v-model="form.last_name" type="text" placeholder="Last Name">
+                            <button>Confirm</button>
+                        </span>
+                    </div>
                     <div>{{ userData.username }} (<a>change</a>)</div>
                     <div>{{ userData.email }} (<a>change</a>)</div>
                     <br>
-                    <div id="password_container"><label>Password:</label> <input type="password" placeholder="Type New Password Here"><br>
+                    <div id="password_container"><label>Password:</label> <input type="password"
+                            placeholder="Type New Password Here"><br>
                         <label>Password: </label><input type="password" placeholder="Retype New Password Here"><br>
                         <button>Change</button>
                     </div>
@@ -31,6 +38,15 @@ export default {
             userData: {
                 id: 0,
             },
+            form: {
+                email: '',
+                first_name: '',
+                last_name: '',
+                image_url: '',
+                username: '',
+                password: '',
+            },
+            toggleChangeName: false,
         }
     },
     methods: {
@@ -47,6 +63,9 @@ export default {
                 this.$router.push(`/`)
             }).catch(error => { console.log(error) })
 
+        },
+        changeName: function(){
+            this.toggleChangeName = !this.toggleChangeName;
         }
     },
     beforeMount() {
@@ -88,7 +107,13 @@ export default {
     justify-items: center;
 }
 
-#form_container{
-    
+#form_container {
+    display: grid;
+    gap: 20px;
+}
+
+#form_container>div>a {
+    cursor: pointer;
+    text-decoration: underline;
 }
 </style>

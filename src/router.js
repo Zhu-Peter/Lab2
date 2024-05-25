@@ -6,6 +6,11 @@ import Menu from './views/MenuView.vue';
 import Order from './views/OrderView.vue'
 import SignUp from './views/SignupView.vue';
 import Profile from './views/ProfileView.vue'
+import Restaurants from './views/DiscoverView.vue'
+
+import RestaurantProfile from './views/RestaurantProfile.vue'
+import RestaurantLogin from './views/RestaurantLogin.vue'
+import RestaurantSignup from './views/RestaurantSignup.vue'
 
 Vue.use(Router)
 
@@ -41,6 +46,26 @@ const router = new Router({
             path: '/order',
             name: 'Orders',
             component: Order
+        },
+        {
+            path: '/restaurants',
+            name: 'Discover',
+            component: Restaurants
+        },
+        {
+            path: '/restaurantprofile',
+            name: 'Restaurant Profile',
+            component: RestaurantProfile
+        },
+        {
+            path: '/restaurantlogin',
+            name: 'Restaurant Log In',
+            component: RestaurantLogin
+        },
+        {
+            path: '/createrestaurant',
+            name: 'Restaurant Sign up',
+            component: RestaurantSignup
         },
     ]
 })
