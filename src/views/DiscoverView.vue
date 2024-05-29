@@ -2,22 +2,41 @@
     <div>
         <NavBar />
         <div id="header">
-            <router-link to="/restaurantprofile">
-                <a class="button">Log In as Restaurant</a>
-            </router-link>
-            <a class="button">Create a Restaurant</a>
+            <div v-if="restaurantData.token == ''">
+                <router-link to="/restaurantprofile">
+                    <a class="button">Log In as Restaurant</a>
+                </router-link>
+                <router-link to="/createrestaurant">
+                    <a class="button">Create a Restaurant</a>
+                </router-link>
+
+            </div>
+            <div v-if="restaurantData.token !== ''">
+                <router-link to="/restaurantprofile">
+                    <a class="button">Restaurant Profile</a>
+                </router-link>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import Cookies from 'vue-cookies';
 import NavBar from '../components/NavBar';
 
     export default {
         name: 'DiscoverView',
         components: {
             NavBar,
-        }
+        },
+        data() {
+            return {
+                restaurantData: {}
+            }
+        },
+        beforeMount() {
+            this.restaurantData = Cookies.get('RestaurantLogin');
+        },
     }
 </script>
 

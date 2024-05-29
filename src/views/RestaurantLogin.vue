@@ -56,7 +56,7 @@ export default {
                 // console.log(request.data);
                 this.token = JSON.stringify(request.data);
                 Cookies.set('RestaurantLogin', this.token)
-                this.$router.push(`/`)
+                this.$router.push(`/restaurants`)
 
             }).catch((error) => { console.log(error); this.error = error.response.data })
         }

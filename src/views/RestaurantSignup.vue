@@ -66,6 +66,7 @@ export default {
                     address: this.address,
                     city: this.city,
                     phone_number: this.phone,
+                    bio: this.bio,
                     profile_url: this.image_url,
                     banner_url: this.banner_url,
                     username: this.username,
@@ -75,8 +76,8 @@ export default {
             }).then((request) => {
                 // console.log(request.data);
                 this.token = JSON.stringify(request.data);
-                Cookies.set('UserTokens', this.token)
-                this.$router.push(`/`)
+                Cookies.set('RestaurantLogin', this.token)
+                this.$router.push(`/restaurants`)
 
             }).catch((error) => { console.log(error); this.error = error.response.data })
         }
