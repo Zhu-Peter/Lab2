@@ -37,7 +37,12 @@
                     </div>
                 </div>
             </div>
-            <button @click="logOut">Log Out</button>
+            <button @click="logOut">Log Out</button><br>
+            <button @click="DeleteProfile">Delete Profile</button>
+            <span v-if="toggleDelete" class="form_name">
+                <input v-model="password_delete" type="text" placeholder="Type Password to Confirm">
+                <button @click="DeleteProfile">Confirm</button>
+            </span>
         </div>
     </div>
 </template>
@@ -66,6 +71,8 @@ export default {
             toggleChangeUserName: false,
             toggleChangeEmail: false,
             toggleChangeImage: false,
+            toggleDelete: false,
+            password_delete: '',
         }
     },
     methods: {
@@ -135,7 +142,25 @@ export default {
                 Cookies.set('LoginData', this.userData)
             }).catch(error => { console.log(error) })
 
-        }
+        },
+        DeleteProfile: function () {
+            if(!this.toggleDelete){
+                this.toggleDelete = !this.toggleDelete
+            }else{
+                axios.request({
+                    method: 'delete',
+                    url: 'http://209.38.6.175:5000/api/client',
+                    headers: {
+                        "x-api-key": "q1LXwh",
+                        "token": this.userData['token']
+                    },
+                    data: this.password_delete
+                }).then((response) => {
+                    console.log(response);
+                }).catch(error => { console.log(error) })
+
+            }
+        },
     },
     beforeMount() {
         let data = { ...this.userData, ...Cookies.get('LoginData') }
@@ -184,5 +209,9 @@ export default {
 #form_container>div>a {
     cursor: pointer;
     text-decoration: underline;
+}
+
+#password_container>button {
+    margin-bottom: 50px;
 }
 </style>
