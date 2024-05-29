@@ -3,7 +3,8 @@
         <router-link to="/"> back to home </router-link>
         <div id="profile_container">
             <div class="info_container">
-                <img :src="userData.image_url" alt="" style="border-radius: 50%;cursor: pointer;margin-bottom: 20px"
+                <img :src="userData.image_url" alt=""
+                    style="border-radius: 50%;cursor: pointer;margin-bottom: 20px; width: 300px;"
                     @click="changeName('image')">
                 <span v-if="toggleChangeImage" class="form_name">
                     <input v-model="form.image_url" type="text" placeholder="Profile Picture (url)">
@@ -38,10 +39,12 @@
                 </div>
             </div>
             <button @click="logOut">Log Out</button><br>
-            <button @click="DeleteProfile">Delete Profile</button>
+            <button id="deletebutton" @click="DeleteProfile">Delete Profile</button>
             <span v-if="toggleDelete" class="form_name">
+                <br>
                 <input v-model="password_delete" type="text" placeholder="Type Password to Confirm">
-                <button @click="DeleteProfile">Confirm</button>
+                <button @click="DeleteProfile">Confirm</button><br>
+                <div id="error_container">{{ error }}</div>
             </span>
         </div>
     </div>
@@ -73,6 +76,7 @@ export default {
             toggleChangeImage: false,
             toggleDelete: false,
             password_delete: '',
+            error: '',
         }
     },
     methods: {
@@ -87,7 +91,10 @@ export default {
             }).then(() => {
                 Cookies.remove('LoginData');
                 this.$router.push(`/`)
-            }).catch(error => { console.log(error) })
+            }).catch(() => {
+                Cookies.remove('LoginData');
+                this.$router.push(`/`)
+            })
 
         },
         changeName: function (type) {
@@ -144,9 +151,9 @@ export default {
 
         },
         DeleteProfile: function () {
-            if(!this.toggleDelete){
+            if (!this.toggleDelete) {
                 this.toggleDelete = !this.toggleDelete
-            }else{
+            } else {
                 axios.request({
                     method: 'delete',
                     url: 'http://209.38.6.175:5000/api/client',
@@ -154,10 +161,12 @@ export default {
                         "x-api-key": "q1LXwh",
                         "token": this.userData['token']
                     },
-                    data: this.password_delete
+                    data: { password: this.password_delete }
                 }).then((response) => {
                     console.log(response);
-                }).catch(error => { console.log(error) })
+                    this.error = '';
+                    this.logOut();
+                }).catch(error => { console.log(error); this.error = error.response.data })
 
             }
         },
@@ -213,5 +222,17 @@ export default {
 
 #password_container>button {
     margin-bottom: 50px;
+}
+
+#deletebutton {
+    margin-top: 50px;
+    padding: 5px;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+}
+
+#error_container {
+    color: red;
 }
 </style>

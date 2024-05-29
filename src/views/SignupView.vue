@@ -65,7 +65,7 @@ export default {
             }).then((request) => {
                 // console.log(request.data);
                 this.token = JSON.stringify(request.data);
-                Cookies.set('UserTokens', this.token)
+                Cookies.set('LoginData', this.token)
                 this.$router.push(`/`)
 
             }).catch((error) => { console.log(error); this.error = error.response.data })
