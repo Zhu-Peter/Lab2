@@ -85,6 +85,10 @@ export default {
 </script>
 
 <style scoped>
+#nav_bar{
+    margin-bottom: 60px;
+}
+
 nav {
     display: flex;
     background-color: white;
