@@ -17,17 +17,21 @@
                 </router-link>
             </div>
         </div>
+        <div id="list_container" >
+            <RestaurantList></RestaurantList>
+        </div>
     </div>
 </template>
 
 <script>
 import Cookies from 'vue-cookies';
 import NavBar from '../components/NavBar';
+import RestaurantList from '../components/RestaurantList.vue'
 
     export default {
         name: 'DiscoverView',
         components: {
-            NavBar,
+            NavBar, RestaurantList
         },
         data() {
             return {
@@ -72,5 +76,8 @@ a{
     text-align: center;
 
     margin-top: 50px;
+}
+#list_container{
+    margin-inline: 150px;
 }
 </style>
