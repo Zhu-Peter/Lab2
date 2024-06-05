@@ -18,6 +18,7 @@
             </div>
         </div>
         <div id="list_container" >
+            <h1>Discover Restaurants for you!</h1>
             <RestaurantList></RestaurantList>
         </div>
     </div>
@@ -76,6 +77,7 @@ a{
     text-align: center;
 
     margin-top: 50px;
+    margin-bottom: 80px;
 }
 #list_container{
     margin-inline: 150px;
