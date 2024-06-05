@@ -1,6 +1,6 @@
 <template>
     <div>
-        <router-link to="/"> back to home </router-link>
+        <router-link id="back_button" to="/"> back to home </router-link>
         <div id="tabs_container">
             <div>Sign In</div>
             <router-link to="/signup">Sign Up</router-link>
