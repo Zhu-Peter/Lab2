@@ -4,12 +4,12 @@
             <div v-for="(page, index) in links" :key="`page-${index}`">
                 <router-link  class="nav_button" :to="page.path">{{ page.name }}</router-link>
             </div>
-            <div class="nav_button" style="margin-left: auto;">
+            <div  style="margin-left: auto;">
                 <div v-if="!isLoggedIn" id="login_button">
-                    <router-link to="/login">Log In</router-link>
+                    <router-link class="nav_button" to="/login">Log In</router-link>
                 </div>
                 <div v-if="isLoggedIn">
-                    <router-link to="/profile">
+                    <router-link class="nav_button" to="/profile">
                         <div id="welcome">
                             <span>
                                 <img :src="userData.image_url" width="30px" style="border-radius: 50%; margin: 5px" />
