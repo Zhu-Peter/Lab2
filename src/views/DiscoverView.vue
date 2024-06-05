@@ -3,7 +3,7 @@
         <NavBar />
         <div id="header">
             <div v-if="restaurantData.token == ''">
-                <router-link to="/restaurantprofile">
+                <router-link to="/restaurantlogin">
                     <a class="button">Log In as Restaurant</a>
                 </router-link>
                 <router-link to="/createrestaurant">
@@ -31,11 +31,16 @@ import NavBar from '../components/NavBar';
         },
         data() {
             return {
-                restaurantData: {}
+                restaurantData: {
+                    token: '',
+                }
             }
         },
         beforeMount() {
-            this.restaurantData = Cookies.get('RestaurantLogin');
+            let data = Cookies.get('RestaurantLogin');
+            if(!(data == null)){
+                this.restaurantData = Cookies.get('RestaurantLogin');
+            }
         },
     }
 </script>
