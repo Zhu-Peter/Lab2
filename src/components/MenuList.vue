@@ -3,13 +3,13 @@
         <div id="menu_grid">
             <div class="menu_container" v-for="item in menu" :key="item.id">
                 <div class="menu_banner" :style="{ 'background-image': 'url(' + item.image_url + ')' }">
-                    
+
                 </div>
                 <div class="menu_description">
                     <div>
                         <div class="menu_name">{{ item.name }}</div>
                         <div>{{ item.description }}</div>
-                        
+
                     </div>
                     <div class="menu_price">${{ item.price }}</div>
                 </div>
@@ -21,8 +21,8 @@
 <script>
 import Cookies from 'vue-cookies';
 import axios from 'axios';
-    export default {
-        name: 'MenuList',
+export default {
+    name: 'MenuList',
     data() {
         return {
             restaurant_id: 0,
@@ -40,49 +40,50 @@ import axios from 'axios';
             params: restaurant_info,
         }).then((response) => { this.menu = response.data }).catch(error => console.log(error))
     },
-    }
+}
 </script>
 
 <style scoped>
 * {
-  box-sizing: border-box;
-}
-#menu_grid{
-    
-        display: grid;
-        gap: 20px;
-        grid-template-columns: auto auto auto;
-
-
+    box-sizing: border-box;
 }
 
-.menu_container{
+#menu_grid {
+    width: 1300px;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: auto auto auto auto;
+
+}
+
+.menu_container {
     cursor: pointer;
     width: 300px;
 }
 
-.menu_container:hover{
+.menu_container:hover {
     filter: brightness(85%)
 }
 
-.menu_banner{
+.menu_banner {
     width: 300px;
     height: 200px;
     background-size: cover;
     background-position: center;
 }
-.menu_description{
+
+.menu_description {
     width: 300px;
     height: 100px;
     background-color: white;
     padding: 20px;
 }
 
-.menu_description > div > div:first-child{
+.menu_description>div>div:first-child {
     font-size: 2rem;
 }
 
-.menu_price{
+.menu_price {
     margin-top: -2rem;
     text-align: end;
     font-size: 3rem;
