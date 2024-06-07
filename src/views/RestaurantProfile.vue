@@ -19,7 +19,8 @@
                             <input v-model="description" type="text" placeholder="Menu Item Description"><br>
                             <input v-model="price" type="text" placeholder="Menu Item Price"><br>
                             <input v-model="image_url" type="text" placeholder="Add Image url"><br>
-                            <button>Add</button>
+                            <button @click="addMenuItem">Add</button>
+                            <div id="errorbox">{{ error }}</div>
                         </div>
                     </div>
                 </div>
@@ -46,6 +47,7 @@ export default {
             description: '',
             price: '',
             image_url: '',
+            error: ''
 
         }
     },
@@ -67,29 +69,53 @@ export default {
             })
 
         },
-    },
-    beforeMount() {
-        let data = { ...this.restaurantData, ...Cookies.get('RestaurantLogin') }
-        if (Object.keys(data).length == 0) { this.$router.push(`/restaurantlogin`) }
-        if (Object.keys(data).length == 2) {
+        addMenuItem: function () {
+            this.error = '';
             axios.request({
-                url: 'http://209.38.6.175:5000/api/restaurant',
+                method: 'post',
+                url: 'http://209.38.6.175:5000/api/menu',
                 headers: {
-                    "x-api-key": "q1LXwh"
+                    "x-api-key": "q1LXwh",
+                    "token": this.restaurantData.token,
                 },
-                params: data
-            }).then(response => {
-                console.log(response);
-                this.restaurantData = { ...data, ...response.data[0] };
-                let tempData = JSON.stringify(this.restaurantData);
-                Cookies.set('RestaurantLogin', tempData)
-            }).catch(error => { console.log(error) })
-        }
-        this.restaurantData = data;
-    },
-    mounted() {
+                data: {
+                    description: this.description,
+                    image_url: this.image_url,
+                    name: this.name,
+                    price: this.price
+                }
 
-    },
+            }).then(() => {
+                this.description = '';
+                this.price = '';
+                this.image_url = '';
+                this.name = '';
+            }
+            ).catch((error) => { console.log(error); this.error = error.response.data })
+    }
+},
+beforeMount() {
+    let data = { ...this.restaurantData, ...Cookies.get('RestaurantLogin') }
+    if (Object.keys(data).length == 0) { this.$router.push(`/restaurantlogin`) }
+    if (Object.keys(data).length == 2) {
+        axios.request({
+            url: 'http://209.38.6.175:5000/api/restaurant',
+            headers: {
+                "x-api-key": "q1LXwh"
+            },
+            params: data
+        }).then(response => {
+            console.log(response);
+            this.restaurantData = { ...data, ...response.data[0] };
+            let tempData = JSON.stringify(this.restaurantData);
+            Cookies.set('RestaurantLogin', tempData)
+        }).catch(error => { console.log(error) })
+    }
+    this.restaurantData = data;
+},
+mounted() {
+
+},
 }
 </script>
 
@@ -119,5 +145,9 @@ export default {
     height: 300px;
     width: 99vw;
     object-fit: cover;
+}
+
+#errorbox {
+    color: red;
 }
 </style>

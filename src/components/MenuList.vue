@@ -3,15 +3,15 @@
         <div id="menu_grid">
             <div class="menu_container" v-for="item in menu" :key="item.id">
                 <div class="menu_banner" :style="{ 'background-image': 'url(' + item.image_url + ')' }">
-                    <div>
-                        <div class="menu_name">{{ item.name }}</div>
-                        <div class="menu_address">${{ item.price }}</div>
-
-                    </div>
-
+                    
                 </div>
                 <div class="menu_description">
-                    <div>{{ item.description }}</div>
+                    <div>
+                        <div class="menu_name">{{ item.name }}</div>
+                        <div>{{ item.description }}</div>
+                        
+                    </div>
+                    <div class="menu_price">${{ item.price }}</div>
                 </div>
             </div>
         </div>
@@ -44,5 +44,48 @@ import axios from 'axios';
 </script>
 
 <style scoped>
+* {
+  box-sizing: border-box;
+}
+#menu_grid{
+    
+        display: grid;
+        gap: 20px;
+        grid-template-columns: auto auto auto;
 
+
+}
+
+.menu_container{
+    cursor: pointer;
+    width: 300px;
+}
+
+.menu_container:hover{
+    filter: brightness(85%)
+}
+
+.menu_banner{
+    width: 300px;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+}
+.menu_description{
+    width: 300px;
+    height: 100px;
+    background-color: white;
+    padding: 20px;
+}
+
+.menu_description > div > div:first-child{
+    font-size: 2rem;
+}
+
+.menu_price{
+    margin-top: -2rem;
+    text-align: end;
+    font-size: 3rem;
+    font-weight: bold;
+}
 </style>

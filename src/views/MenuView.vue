@@ -1,9 +1,6 @@
 <template>
     <div>
         <router-link id="back_button" to="/restaurants"> back to restaurants </router-link>
-
-        <div>displaying menu for {{ restaurant_id }}</div>
-
         <MenuList></MenuList>
     </div>
 </template>
