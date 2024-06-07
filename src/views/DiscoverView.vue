@@ -17,7 +17,7 @@
                 </router-link>
             </div>
         </div>
-        <div id="list_container" >
+        <div id="list_container">
             <h1>Discover Restaurants for you!</h1>
             <RestaurantList></RestaurantList>
         </div>
@@ -29,35 +29,37 @@ import Cookies from 'vue-cookies';
 import NavBar from '../components/NavBar';
 import RestaurantList from '../components/RestaurantList.vue'
 
-    export default {
-        name: 'DiscoverView',
-        components: {
-            NavBar, RestaurantList
-        },
-        data() {
-            return {
-                restaurantData: {
-                    token: '',
-                }
+export default {
+    name: 'DiscoverView',
+    components: {
+        NavBar, RestaurantList
+    },
+    data() {
+        return {
+            restaurantData: {
+                token: '',
             }
-        },
-        beforeMount() {
-            let data = Cookies.get('RestaurantLogin');
-            if(!(data == null)){
-                this.restaurantData = Cookies.get('RestaurantLogin');
-            }
-        },
-    }
+        }
+    },
+    beforeMount() {
+        let data = Cookies.get('RestaurantLogin');
+        if (!(data == null)) {
+            this.restaurantData = Cookies.get('RestaurantLogin');
+        }
+    },
+}
 </script>
 
 <style scoped>
-*{
+* {
     box-sizing: border-box;
 }
-a{
+
+a {
     text-decoration: none;
 }
-.button{
+
+.button {
     padding: 15px;
     background-color: darkred;
     color: white;
@@ -65,10 +67,12 @@ a{
     cursor: pointer;
     margin-left: 15px;
 }
-.button:hover{
+
+.button:hover {
     background-color: gray;
 }
-#header{
+
+#header {
     margin-inline: auto;
     background-color: white;
     padding-top: 30px;
@@ -79,7 +83,22 @@ a{
     margin-top: 50px;
     margin-bottom: 80px;
 }
-#list_container{
+
+#list_container {
     margin-inline: 150px;
+    padding-bottom: 100px;
+    background-color: rgb(255, 206, 115);
+    border: 1px solid white;
+}
+
+#list_container>h1 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 60px;
+}
+
+#RestaurantList {
+    margin-inline: auto;
+    width: 86%;
 }
 </style>

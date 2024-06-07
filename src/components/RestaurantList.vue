@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="RestaurantList">
         <div id="restaurant_grid">
             <div class="restaurant_container" v-for="restaurant in restaurant_list" :key="restaurant.restaurant_id" @click="goToMenu(restaurant.restaurant_id)">
                 <div class="restaurant_banner" :style="{ 'background-image': 'url(' + restaurant.profile_url + ')' }">
@@ -52,8 +52,9 @@ export default {
 <style scoped>
 #restaurant_grid {
     display: grid;
-    grid-template-columns: auto auto auto auto;
-    gap: 20px;
+    grid-template-columns: auto auto auto;
+    column-gap: 10px;
+    row-gap: 40px;
 }
 
 .restaurant_container {
@@ -62,6 +63,10 @@ export default {
     background-color: white;
 
     cursor: pointer;
+}
+
+.restaurant_container:hover {
+    filter: brightness(85%)
 }
 
 .restaurant_banner{
