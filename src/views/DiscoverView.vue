@@ -87,7 +87,7 @@ a {
 #list_container {
     margin-inline: 150px;
     padding-bottom: 100px;
-    background-color: rgb(255, 206, 115);
+    background-color: rgb(255, 247, 231);
     border: 1px solid white;
 }
 

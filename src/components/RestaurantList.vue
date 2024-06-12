@@ -65,7 +65,7 @@ export default {
 
     }
 
-    column-gap: 10px;
+    column-gap: 30px;
     row-gap: 40px;
 }
 
