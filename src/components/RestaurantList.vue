@@ -1,7 +1,8 @@
 <template>
     <div id="RestaurantList">
         <div id="restaurant_grid">
-            <div class="restaurant_container" v-for="restaurant in restaurant_list" :key="restaurant.restaurant_id" @click="goToMenu(restaurant.restaurant_id)">
+            <div class="restaurant_container" v-for="restaurant in restaurant_list" :key="restaurant.restaurant_id"
+                @click="goToMenu(restaurant.restaurant_id)">
                 <div class="restaurant_banner" :style="{ 'background-image': 'url(' + restaurant.profile_url + ')' }">
                     <div>
                         <div class="restaurant_name">{{ restaurant.name }}</div>
@@ -32,8 +33,8 @@ export default {
         }
     },
     methods: {
-        goToMenu: function(id){
-            let temp = JSON.stringify({restaurant_id: id})
+        goToMenu: function (id) {
+            let temp = JSON.stringify({ restaurant_id: id })
             Cookies.set('restaurant_menu', temp)
             this.$router.push(`/menu`)
         }
@@ -52,14 +53,31 @@ export default {
 <style scoped>
 #restaurant_grid {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto;
+    justify-content: center;
+    @media only screen and (min-width: 1020px) {
+        grid-template-columns: auto auto;
+
+    }
+
+    @media only screen and (min-width: 1650px) {
+        grid-template-columns: auto auto auto;
+
+    }
+
     column-gap: 10px;
     row-gap: 40px;
 }
 
 .restaurant_container {
-    width: 400px;
-    height: 350px;
+    width: 300px;
+    height: 240px;
+
+    @media only screen and (min-width: 1300px) {
+        width: 400px;
+        height: 350px;
+    }
+
     background-color: white;
 
     cursor: pointer;
@@ -69,7 +87,7 @@ export default {
     filter: brightness(85%)
 }
 
-.restaurant_banner{
+.restaurant_banner {
     background-size: cover;
     background-position: center;
     height: 250px;
@@ -78,17 +96,22 @@ export default {
     padding: 5px;
 }
 
-.restaurant_name{
+.restaurant_name {
     font-size: 2rem;
     font-weight: bold;
     color: white;
 }
 
-.restaurant_address{
+.restaurant_address {
     color: rgb(218, 218, 218);
 }
 
-.restaurant_description{
-    padding: 12px;
+.restaurant_description {
+    display: none;
+
+    @media only screen and (min-width: 1300px) {
+        display: block;
+        padding: 12px;
+    }
 }
 </style>

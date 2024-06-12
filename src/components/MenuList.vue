@@ -108,7 +108,7 @@ export default {
     gap: 20px;
     grid-template-columns: auto;
 
-    @media only screen and (min-width: 100px) {
+    @media only screen and (min-width: 1000px) {
         grid-template-columns: auto auto auto;
     }
 

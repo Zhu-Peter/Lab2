@@ -35,6 +35,7 @@ import NavBar from '../components/NavBar';
   box-sizing: border-box;
 }
 #discover{
+    padding-top: 20px;
     background-image: url('https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg');
     padding-bottom: 200px;
 }
@@ -68,8 +69,11 @@ import NavBar from '../components/NavBar';
 #order_box{
     background-color: white;
     width: 100%;
+    padding: 20px;
+    @media only screen and (min-width: 900px){
     padding-left: 15%;
     padding-top: 90px;
+    }
 }
 
 #order_box > a{
