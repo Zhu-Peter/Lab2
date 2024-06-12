@@ -6,7 +6,26 @@
             <div class="profile">
                 <img id="profile_picture" :src="restaurantData.profile_url" alt="">
                 <h1>{{ restaurantData.name }}</h1>
-                <p>{{ restaurantData.bio }}</p>
+                <h2>{{ restaurantData.bio }}</h2>
+                <p>{{ restaurantData.email }}</p>
+                <p>{{ restaurantData.address }}, {{ restaurantData.city }}</p>
+                <p>{{ restaurantData.phone_number }}</p>
+                <button @click="toggleEdit = !toggleEdit">Edit</button>
+                <div id="signup_form" action="" v-if="toggleEdit">
+                    <input v-model="profile.email" type="text" placeholder="Email">
+                    <input v-model="profile.name" type="text" placeholder="Restaurant Name">
+                    <input v-model="profile.address" type="text" placeholder="Address">
+                    <input v-model="profile.city" type="text" placeholder="City">
+                    <input v-model="profile.phone" type="text" placeholder="Phone Number">
+                    <input v-model="profile.bio" type="text" placeholder="Description">
+                    <input v-model="profile.password" type="password" placeholder="Password">
+                    <input type="password" placeholder="Retype Password">
+                    <input v-model="profile.image_url" type="text" placeholder="Restaurant Picture (url)">
+                    <input v-model="profile.banner_url" type="text" placeholder="Restaurant Banner (url)"><br>
+                    <button @click="updateInfo">Update</button><br>
+                    <div>{{ error }}</div>
+
+                </div>
                 <button @click="logOut">Log Out</button>
             </div>
             <div class="menu">
@@ -24,7 +43,7 @@
                         </div>
                     </div>
                 </div>
-                <MenuList></MenuList>
+                <MenuList :key="componentKey" :edit="true"></MenuList>
             </div>
 
         </div>
@@ -47,7 +66,20 @@ export default {
             description: '',
             price: '',
             image_url: '',
-            error: ''
+            error: '',
+            componentKey: 0,
+            toggleEdit: false,
+            profile: {
+                email: '',
+                name: '',
+                phone: '',
+                image_url: '',
+                banner_url: '',
+                address: '',
+                city: '',
+                bio: '',
+                password: '',
+            }
 
         }
     },
@@ -92,30 +124,50 @@ export default {
                 this.name = '';
             }
             ).catch((error) => { console.log(error); this.error = error.response.data })
-    }
-},
-beforeMount() {
-    let data = { ...this.restaurantData, ...Cookies.get('RestaurantLogin') }
-    if (Object.keys(data).length == 0) { this.$router.push(`/restaurantlogin`) }
-    if (Object.keys(data).length == 2) {
-        axios.request({
-            url: 'http://209.38.6.175:5000/api/restaurant',
-            headers: {
-                "x-api-key": "q1LXwh"
-            },
-            params: data
-        }).then(response => {
-            console.log(response);
-            this.restaurantData = { ...data, ...response.data[0] };
-            let tempData = JSON.stringify(this.restaurantData);
-            Cookies.set('RestaurantLogin', tempData)
-        }).catch(error => { console.log(error) })
-    }
-    this.restaurantData = data;
-},
-mounted() {
+            this.componentKey += 1;
+        },
+        updateInfo: function(){
+            this.error = '';
+            let updateData = {}
+            for(let key in this.profile){
+                if(this.profile[key] !== ''){
+                    updateData[key] = this.profile[key];
+                }
+            }
+            axios.request({
+                method: 'patch',
+                url: 'http://209.38.6.175:5000/api/restaurant',
+                headers: {
+                    "x-api-key": "q1LXwh",
+                    "token": this.restaurantData.token
+                },
+                data: updateData,
+            }).then(() => Object.assign(this.restaurantData, updateData)).catch(error => { console.log(error); this.error = error.response.data; })
+        }
+    },
+    beforeMount() {
+        let data = { ...this.restaurantData, ...Cookies.get('RestaurantLogin') }
+        if (Object.keys(data).length == 0) { this.$router.push(`/restaurantlogin`) }
+        if (Object.keys(data).length == 2) {
+            axios.request({
+                url: 'http://209.38.6.175:5000/api/restaurant',
+                headers: {
+                    "x-api-key": "q1LXwh"
+                },
+                params: data
+            }).then(response => {
+                console.log(response);
+                this.restaurantData = { ...data, ...response.data[0] };
+                let tempData = JSON.stringify(this.restaurantData);
+                Cookies.set('RestaurantLogin', tempData)
+            }).catch(error => { console.log(error) })
+        }
+        this.restaurantData = data;
+        Cookies.set('restaurant_menu', { restaurant_id: data.restaurant_id })
+    },
+    mounted() {
 
-},
+    },
 }
 </script>
 
