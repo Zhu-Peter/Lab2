@@ -2,13 +2,20 @@
     <div>
         <NavBar></NavBar>
         <div>
-            <div>
-                <!-- <div v-for="(order, index) in orders" :key="index">
-                    <div>{{ order.order_id }}{{ order.name }} {{ order.price }}</div>
+            <div id="order_container">
+                <div v-for="(order) in orders" :key="order.order_id">
+                    <div>
+                        <h2>order #{{ order.order_id }}</h2>
+                        <h3>items: </h3>
+                        <div v-for="item in order.items" :key="item.name">
+                            <div>{{ item.name }}: {{ item.amount }}</div>
+                            <div>Total: ${{ item.price }}</div>
+                        </div>
+                    </div>
                 </div>
                 <div>
                     {{ error }}
-                </div> -->
+                </div>
             </div>
         </div>
     </div>
@@ -44,14 +51,14 @@ export default {
             },
         }).then(response => {
             this.raworders = response.data;
-            console.log(response)
+            // console.log(response)
             let old = this.raworders;
             let orders = [];
             let index = 0;
 
             let order_ids = []
             let menu_ids = []
-            let price = 0;
+            // let price = 0;
             // let amount = 0;
             let counter = 0;
 
@@ -80,7 +87,8 @@ export default {
 
                 }
             }
-            console.log(orders)
+            // console.log(orders)
+            this.orders = orders;
 
         }).catch(error => { console.log(error); })
 
@@ -143,4 +151,15 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+#order_container{
+    background-color: white;
+    margin-inline: 150px;
+
+    padding-top: 50px;
+    padding-left: 20px;
+
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+</style>
