@@ -15,6 +15,9 @@
                 <router-link to="/restaurantprofile">
                     <a class="button">Restaurant Profile</a>
                 </router-link>
+                <router-link to="/restaurantorders">
+                    <a class="button">Restaurant Orders</a>
+                </router-link>
             </div>
         </div>
         <div id="list_container">

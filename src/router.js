@@ -11,6 +11,7 @@ import Restaurants from './views/DiscoverView.vue'
 import RestaurantProfile from './views/RestaurantProfile.vue'
 import RestaurantLogin from './views/RestaurantLogin.vue'
 import RestaurantSignup from './views/RestaurantSignup.vue'
+import RestaurantOrders from './views/RestaurantOrders.vue'
 
 Vue.use(Router)
 
@@ -66,6 +67,11 @@ const router = new Router({
             path: '/createrestaurant',
             name: 'Restaurant Sign up',
             component: RestaurantSignup
+        },
+        {
+            path: '/restaurantorders',
+            name: 'Restaurant Orders',
+            component: RestaurantOrders
         },
     ]
 })
