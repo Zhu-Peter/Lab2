@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <NavBar />
+    <div id="DiscoverView">
+        <NavBar id="nav"/>
         <div id="header">
             <div v-if="restaurantData.token == ''">
                 <router-link to="/restaurantlogin">
@@ -55,6 +55,13 @@ export default {
     box-sizing: border-box;
 }
 
+#DiscoverView {
+    background-image: url('https://images.unsplash.com/photo-1692290131136-75b4143f3603?q=80&w=1976&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+    background-position: center;
+    padding-top: 40px;
+}
+
+
 a {
     text-decoration: none;
 }
@@ -74,25 +81,58 @@ a {
 
 #header {
     margin-inline: auto;
-    background-color: white;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    width: 800px;
+    
+    padding-top: 60px;
+    padding-bottom: 60px;
+    margin-inline: 300px;
     text-align: center;
 
-    margin-top: 50px;
-    margin-bottom: 80px;
+    margin-top: 30px;
+    margin-bottom: 40px;
+
+    /* opacity: 90%; */
+    position: relative;
+
+    z-index: 3;
+}
+
+#header::before{
+    opacity: 95%;
+    background-color: white;
+    content: "";
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+
+    z-index: -1;
 }
 
 #list_container {
     margin-inline: 150px;
     padding-bottom: 100px;
-    background-color: rgb(255, 247, 231);
-    border: 1px solid white;
+
+    position: relative;
+
+    z-index: 3;
+}
+
+#list_container::before{
+    opacity: 95%;
+    background-color: white;
+    content: "";
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+
+    z-index: -1;
 }
 
 #list_container>h1 {
-    margin-top: 20px;
+    padding-top: 40px;
     margin-bottom: 20px;
     margin-left: 60px;
 }
