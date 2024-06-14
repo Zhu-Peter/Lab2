@@ -100,8 +100,8 @@ export default {
                     orders[index - 1].total_price += old[i].price
                 }
             }
-            console.log(orders)
-            this.orders = orders;
+            // console.log(orders)
+            this.orders = orders.reverse();
 
         }).catch(error => { console.log(error); })
 
