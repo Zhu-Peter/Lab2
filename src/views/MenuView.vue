@@ -32,7 +32,7 @@ export default {
         submitOrder: function(){
             let login = Cookies.get('LoginData');
             if(login !== null){
-                let menu_orders = Cookies.get('menu_orders')
+                // let menu_orders = Cookies.get('menu_orders')
                 axios.request({
                     method: 'post',
                     url: 'http://209.38.6.175:5000/api/client-order',
@@ -45,10 +45,10 @@ export default {
                         menu_items: this.orders
                     }
     
-                }).then(response => {
-                    menu_orders.push(response.data)
+                }).then(() => {
+                    // menu_orders.push(response.data)
                     // console.log(response.data, menu_orders); 
-                    Cookies.set('menu_orders', menu_orders);
+                    // Cookies.set('menu_orders', menu_orders);
 
                     this.$router.push(`/order`)
                 })
