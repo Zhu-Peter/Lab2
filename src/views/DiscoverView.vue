@@ -119,8 +119,8 @@ a {
 }
 
 #list_container::before{
-    opacity: 95%;
-    background-color: white;
+    opacity: 85%;
+    background-color: rgb(255, 238, 216);
     content: "";
     top: 0;
     left: 0;

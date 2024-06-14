@@ -2,7 +2,7 @@
     <div>
         <div id="menu_grid">
             <div class="menu_container" v-for="item in menu" :key="item.id">
-                <div class="menu_card" @click="addOrder(item.id)">
+                <div :ref="`menu_item_${item.id}`" class="menu_card" @click="addOrder(item.id)">
                     <div class="menu_banner" :style="{ 'background-image': 'url(' + item.image_url + ')' }">
 
                     </div>
@@ -45,6 +45,7 @@ export default {
             description: '',
             price: '',
             image_url: '',
+            orders: [],
         }
     },
     methods: {
@@ -81,7 +82,21 @@ export default {
             }).then().catch(error => console.log(error))
 
 
-        }
+        },
+        addOrder: function (id) {
+            if(!this.edit){
+                if(this.orders.includes(id)){
+                    this.orders.splice(this.orders.indexOf(id), 1)
+                    this.$refs[`menu_item_${id}`][0].style.border = 'none'
+                }else{
+                    this.orders.push(id);
+                    this.$refs[`menu_item_${id}`][0].style.border = 'green 5px solid'
+                }
+                // console.log(this.orders)
+                this.$emit(`getorders`, this.orders)
+
+            }
+        },
     },
     beforeMount() {
         let restaurant_info = Cookies.get('restaurant_menu')
@@ -93,6 +108,9 @@ export default {
             },
             params: restaurant_info,
         }).then((response) => { this.menu = response.data }).catch(error => console.log(error))
+    },
+    mounted() {
+        // console.log(this.$refs)
     },
 }
 </script>
@@ -139,14 +157,14 @@ export default {
 }
 
 .menu_banner {
-    width: 300px;
+    width: 290px;
     height: 200px;
     background-size: cover;
     background-position: center;
 }
 
 .menu_description {
-    width: 300px;
+    width: 290px;
     height: 100px;
     background-color: white;
     padding: 20px;
