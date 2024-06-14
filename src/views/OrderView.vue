@@ -3,14 +3,24 @@
         <NavBar></NavBar>
         <div>
             <div id="order_container">
-                <div v-for="(order) in orders" :key="order.order_id">
+                <div class="order" v-for="(order) in orders" :key="order.order_id">
                     <div>
-                        <h2>order #{{ order.order_id }}</h2>
-                        <h3>items: </h3>
-                        <div v-for="item in order.items" :key="item.name">
-                            <div>{{ item.name }}: {{ item.amount }}</div>
-                            <div>Total: ${{ item.price }}</div>
+                        <h2>Order #{{ order.order_id }}</h2>
+                        <h3>Items: </h3>
+                        <div class="order_items" v-for="item in order.items" :key="item.name">
+                                <div>
+                                    {{ item.name }}: x{{ item.amount }}
+
+                                </div>
+
+                                <div>
+                                    ...${{ item.price }}
+
+                                </div>
+
                         </div>
+                        <br>
+                        <h2>Total: ${{ order.total_price }}</h2>
                     </div>
                 </div>
                 <div>
@@ -58,7 +68,7 @@ export default {
 
             let order_ids = []
             let menu_ids = []
-            // let price = 0;
+            // let tot_price = 0;
             // let amount = 0;
             let counter = 0;
 
@@ -68,6 +78,7 @@ export default {
                     menu_ids = []
                     orders[index] = {}
                     orders[index].order_id = old[i].order_id
+                    orders[index].total_price = 0
                     index++
                 }
 
@@ -81,28 +92,30 @@ export default {
                         amount: 1,
                         price: old[i].price,
                     })
-                } else {
-                    orders[index - 1].items[counter-1].amount++
-                    orders[index - 1].items[counter-1].price = orders[index - 1].items[counter-1].price + old[i].price
 
+                    orders[index - 1].total_price += old[i].price
+                } else {
+                    orders[index - 1].items[counter - 1].amount++
+                    orders[index - 1].items[counter - 1].price = orders[index - 1].items[counter - 1].price + old[i].price
+                    orders[index - 1].total_price += old[i].price
                 }
             }
-            // console.log(orders)
+            console.log(orders)
             this.orders = orders;
 
         }).catch(error => { console.log(error); })
 
     },
     mounted() {
-        
-        
+
+
 
     },
 }
 </script>
 
 <style scoped>
-#order_container{
+#order_container {
     background-color: white;
     margin-inline: 150px;
 
@@ -110,6 +123,24 @@ export default {
     padding-left: 20px;
 
     display: grid;
-    grid-template-columns: auto auto auto;
+    gap: 60px;
+    justify-items: center;
+    /* grid-template-columns: auto auto auto; */
+}
+
+.order {
+    border: 1px black solid;
+    width: 400px;
+    padding: 30px;
+}
+
+.order_items{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 5px;
+}
+
+.order_items > div:last-child{
+    justify-self: end;
 }
 </style>
