@@ -49,6 +49,8 @@ export default {
                     menu_orders.push(response.data)
                     // console.log(response.data, menu_orders); 
                     Cookies.set('menu_orders', menu_orders);
+
+                    this.$router.push(`/order`)
                 })
                 .catch(error => {this.error = error.response.data; console.log(error)})
 
@@ -86,6 +88,8 @@ export default {
     font-weight: bold;
     color: white;
     background-color: orange;
+
+    cursor: pointer;
 }
 #error{
     color: red;

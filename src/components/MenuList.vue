@@ -18,6 +18,11 @@
                 </div>
                 <button v-if="edit" @click="toggleEdit = !toggleEdit">Edit</button>
                 <button v-if="edit" @click="DeleteMenuItem(item.id)">Delete</button>
+                <div v-if="orders.includes(item.id)" class="item_amount_bar">
+                    <span class="button" @click="removeOrder(item.id)">-</span>
+                    <span class="item_amount">{{ orders.filter((thing) => thing === item.id).length }}</span>
+                    <span class="button" @click="addOrder(item.id)">+</span>
+                </div>
                 <div v-if="toggleEdit">
                     <input v-model="name" type="text" placeholder="Menu Item Name"><br>
                     <input v-model="description" type="text" placeholder="Menu Item Description"><br>
@@ -84,19 +89,38 @@ export default {
 
         },
         addOrder: function (id) {
-            if(!this.edit){
-                if(this.orders.includes(id)){
-                    this.orders.splice(this.orders.indexOf(id), 1)
-                    this.$refs[`menu_item_${id}`][0].style.border = 'none'
-                }else{
-                    this.orders.push(id);
-                    this.$refs[`menu_item_${id}`][0].style.border = 'green 5px solid'
-                }
-                // console.log(this.orders)
+            if (!this.edit) {
+                this.orders.push(id);
+                this.$refs[`menu_item_${id}`][0].style.border = 'green 5px solid'
+
                 this.$emit(`getorders`, this.orders)
 
             }
+
+            /// FIX THIS TO ADD MULTIPLE
+            // if (!this.edit) {
+            //     if (this.orders.includes(id)) {
+            //         this.orders.splice(this.orders.indexOf(id), 1)
+            //         this.$refs[`menu_item_${id}`][0].style.border = 'none'
+            //     } else {
+            //         this.orders.push(id);
+            //         this.$refs[`menu_item_${id}`][0].style.border = 'green 5px solid'
+            //     }
+            //     // console.log(this.orders)
+            //     this.$emit(`getorders`, this.orders)
+
+            // }
         },
+        removeOrder: function (id) {
+            if (!this.edit) {
+                if (this.orders.includes(id)) {
+                    this.orders.splice(this.orders.indexOf(id), 1)
+                    if (!(this.orders.includes(id))) {
+                    this.$refs[`menu_item_${id}`][0].style.border = 'none'
+                    }
+                }
+            }
+        }
     },
     beforeMount() {
         let restaurant_info = Cookies.get('restaurant_menu')
@@ -179,5 +203,21 @@ export default {
     text-align: end;
     font-size: 3rem;
     font-weight: bold;
+}
+
+.item_amount_bar{
+    text-align: center;
+    margin-top: 5px;
+
+    user-select: none;
+}
+
+.button{
+    background-color: gainsboro;
+    margin-inline: 12px;
+    padding: 2px 5px;
+    border: 1px solid;
+
+    cursor: pointer;
 }
 </style>
