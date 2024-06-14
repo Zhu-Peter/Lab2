@@ -2,7 +2,7 @@
     <div id="RestaurantList">
         <div id="restaurant_grid">
             <div class="restaurant_container" v-for="restaurant in restaurant_list" :key="restaurant.restaurant_id"
-                @click="goToMenu(restaurant.restaurant_id)">
+                @click="goToMenu(restaurant)">
                 <div class="restaurant_banner" :style="{ 'background-image': 'url(' + restaurant.profile_url + ')' }">
                     <div>
                         <div class="restaurant_name">{{ restaurant.name }}</div>
@@ -33,8 +33,8 @@ export default {
         }
     },
     methods: {
-        goToMenu: function (id) {
-            let temp = JSON.stringify({ restaurant_id: id })
+        goToMenu: function (restaurant) {
+            let temp = JSON.stringify({ restaurant_id: restaurant.restaurant_id, name: restaurant.name })
             Cookies.set('restaurant_menu', temp)
             this.$router.push(`/menu`)
         }

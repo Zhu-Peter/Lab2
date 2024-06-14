@@ -2,6 +2,7 @@
     <div>
         <router-link id="back_button" to="/restaurants"> back to restaurants </router-link>
         <div id="menu_container">
+            <h1>{{ restaurant_info.name }}</h1>
             <MenuList @getorders="getorders"></MenuList>
 
         <button id="submit_button" @click="submitOrder">Submit order</button>
@@ -22,7 +23,7 @@ export default {
     },
     data() {
         return {
-            restaurant_id: 0,
+            restaurant_info: 0,
             orders: [],
             error: '',
         }
@@ -40,11 +41,16 @@ export default {
                         "token": login.token
                     },
                     data:{
-                        restaurant_id: this.restaurant_id,
+                        restaurant_id: this.restaurant_info.restaurant_id,
                         menu_items: this.orders
                     }
     
-                }).then(response => Cookies.set('menu_orders', menu_orders.push(response.data))).catch(error => {this.error = error.response.data; console.log(error)})
+                }).then(response => {
+                    menu_orders.push(response.data)
+                    // console.log(response.data, menu_orders); 
+                    Cookies.set('menu_orders', menu_orders);
+                })
+                .catch(error => {this.error = error.response.data; console.log(error)})
 
             }else{
                 this.error = 'Please login first'
@@ -56,8 +62,7 @@ export default {
         }
     },
     beforeMount() {
-        let restaurant_info = Cookies.get('restaurant_menu')
-        this.restaurant_id = restaurant_info.restaurant_id
+        this.restaurant_info = Cookies.get('restaurant_menu')
     },
 }
 </script>

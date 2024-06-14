@@ -84,7 +84,12 @@ a {
     
     padding-top: 60px;
     padding-bottom: 60px;
-    margin-inline: 300px;
+    margin-inline: 150px;
+
+    @media only screen and (min-width: 1100px){
+        margin-inline: 300px;
+
+    }
     text-align: center;
 
     margin-top: 30px;
