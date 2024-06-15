@@ -72,7 +72,7 @@ export default {
             ).catch(error => console.log(error))
         },
         filterOrders: function (filter) {
-            console.log(filter)
+            // console.log(this.older_orders)
             
             if (filter == 'none') {
                 this.orders = this.older_orders;
@@ -138,6 +138,9 @@ export default {
                 }
                 // console.log(orders)
                 this.orders = orders.reverse();
+                if(filter == null){
+                    this.older_orders = this.orders
+                }
             });
         }
 
@@ -145,7 +148,6 @@ export default {
     beforeMount() {
         this.restaurant_info = Cookies.get('RestaurantLogin')
         this.getOrders()
-        this.older_orders = this.orders
 
     },
     updated() {
