@@ -16,7 +16,7 @@
                     <input v-model="profile.name" type="text" placeholder="Restaurant Name">
                     <input v-model="profile.address" type="text" placeholder="Address">
                     <input v-model="profile.city" type="text" placeholder="City">
-                    <input v-model="profile.phone" type="text" placeholder="Phone Number">
+                    <input v-model="profile.phone_number" type="text" placeholder="Phone Number">
                     <input v-model="profile.bio" type="text" placeholder="Description">
                     <input v-model="profile.password" type="password" placeholder="Password">
                     <input type="password" placeholder="Retype Password">
@@ -72,7 +72,7 @@ export default {
             profile: {
                 email: '',
                 name: '',
-                phone: '',
+                phone_number: '',
                 image_url: '',
                 banner_url: '',
                 address: '',
@@ -142,7 +142,7 @@ export default {
                     "token": this.restaurantData.token
                 },
                 data: updateData,
-            }).then(() => Object.assign(this.restaurantData, updateData)).catch(error => { console.log(error); this.error = error.response.data; })
+            }).then(() => {Object.assign(this.restaurantData, updateData); Cookies.set('RestaurantLogin', this.restaurantData)}).catch(error => { console.log(error); this.error = error.response.data; })
         }
     },
     beforeMount() {

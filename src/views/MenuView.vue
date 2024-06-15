@@ -2,7 +2,7 @@
     <div>
         <router-link id="back_button" to="/restaurants"> back to restaurants </router-link>
         <div id="menu_container">
-            <h1>{{ restaurant_info.name }}</h1>
+            <h1>Menu for {{ restaurant_info.name }}</h1>
             <MenuList @getorders="getorders"></MenuList>
 
         <button id="submit_button" @click="submitOrder">Submit order</button>
@@ -64,7 +64,16 @@ export default {
         }
     },
     beforeMount() {
-        this.restaurant_info = Cookies.get('restaurant_menu')
+        let restaurant_id = Cookies.get('restaurant_menu')
+        axios.request({
+                url: 'http://209.38.6.175:5000/api/restaurant',
+                headers: {
+                    "x-api-key": "q1LXwh"
+                },
+                params: restaurant_id
+            }).then(response => {this.restaurant_info = response.data[0]; 
+                // console.log(response.data)
+            }).catch(error => { console.log(error) })
     },
 }
 </script>
